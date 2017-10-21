@@ -56,7 +56,7 @@ void operatorControl() {
 		if(arm2FBC.goal < ARM_2_BOTTOM) {
 			fbcSetGoal(&arm2FBC, ARM_2_BOTTOM);
 		}
-		
+
 		if(buttonIsNewPress(JOY1_8U)) {
 			clawMove();
 		}
@@ -66,7 +66,6 @@ void operatorControl() {
 		driveSet(joystickGetAnalog(1, 3) + joystickGetAnalog(1,4),
 						 joystickGetAnalog(1, 3) - joystickGetAnalog(1,4));
 
-		}
 		delay(20);
 	}
 }
