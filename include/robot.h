@@ -8,12 +8,12 @@
 #define ARM_2_BOTTOM -1160
 
 const char claw;
-const char mogoR;
-const char mogoL;
-const char RDrive;
-const char LDrive;
-const char arm1R;
-const char arm1L;
+const char mogo;
+const char Rdrive2;
+const char RDrive1;
+const char LDrive1;
+const char LDrive2;
+const char arm1;
 const char arm2;
 
 

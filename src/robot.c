@@ -1,12 +1,12 @@
 #include "main.h"
 
 const char claw = 2;
-const char mogoR = 3;
-const char mogoL = 4;
-const char RDrive = 5;
-const char LDrive = 6;
-const char arm1R = 7;
-const char arm1L = 8;
+const char mogo = 3;
+const char RDrive2 = 4;
+const char RDrive1 = 5;
+const char LDrive1 = 6;
+const char LDrive2 = 7;
+const char arm1 = 8;
 const char arm2 = 9;
 
 simpleSensor powerExpander = {1, ANALOG, false};
@@ -31,23 +31,24 @@ void encodersInit() {
 
 void motorsInit() {
 	blrsMotorInit(claw, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(mogoR, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(mogoL, false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(RDrive, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(LDrive, false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(arm1R, false, 0.35, NULL);
-	blrsMotorInit(arm1L, true, 0.35, NULL);
+	blrsMotorInit(mogo, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(RDrive2, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(RDrive1, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(LDrive1, false, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(LDrive2, false, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(arm1, true, 0.35, NULL);
 	blrsMotorInit(arm2, true, 2, NULL);
 }
 
 void driveSet(int left, int right) {
-	blrsMotorSet(LDrive, left, false);
-	blrsMotorSet(RDrive, right, false);
+	blrsMotorSet(LDrive1, left, false);
+	blrsMotorSet(LDrive2, left, false);
+	blrsMotorSet(RDrive1, right, false);
+	blrsMotorSet(RDrive2, right, false);
 }
 
 void armSetStage1(int power) {
-	blrsMotorSet(arm1L, power, false);
-	blrsMotorSet(arm1R, power, false);
+	blrsMotorSet(arm1, power, false);
 }
 
 void armSetStage2(int power) {
@@ -60,8 +61,7 @@ void armSetBothStages(int stage1, int stage2) {
 }
 
 void mogoSet(int power) {
-	blrsMotorSet(mogoL, power, false);
-	blrsMotorSet(mogoR, power, false);
+	blrsMotorSet(mogo, power, false);
 }
 
 void clawMove() {
