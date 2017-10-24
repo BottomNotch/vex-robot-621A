@@ -31,26 +31,38 @@
  */
 
 void operatorControl() {
+	bool arm2ChangeGoal = false;
 	while (1) {
 
 		if(buttonGetState(JOY1_5U)) {
-			fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot) + 800);
+			fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot) + 300);
 		}
 
 		else if(buttonGetState(JOY1_5D)) {
-			fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot) - 500);
+			fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot) - 25);
 		}
 
 		if(arm1FBC.goal < ARM_1_BOTTOM) {
 			fbcSetGoal(&arm1FBC, ARM_1_BOTTOM);
 		}
 
-		if(buttonGetState(JOY1_6U)) {
-			fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc) + 200);
+		else if(arm1FBC.goal > ARM_1_TOP) {
+			fbcSetGoal(&arm1FBC, ARM_1_TOP);
 		}
 
-		if(buttonGetState(JOY1_6D)) {
+		if(buttonGetState(JOY1_6U)) {
+			fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc) + 200);
+			arm2ChangeGoal = true;
+		}
+
+		else if(buttonGetState(JOY1_6D)) {
 			fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc) - 200);
+			arm2ChangeGoal = true;
+		}
+
+		else if(arm2ChangeGoal) {
+			fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc));
+			arm2ChangeGoal = false;
 		}
 
 		if(arm2FBC.goal < ARM_2_BOTTOM) {

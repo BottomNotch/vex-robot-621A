@@ -5,6 +5,7 @@
 #define CLAW_OPEN true
 #define CLAW_CLOSE false
 #define ARM_1_BOTTOM 260
+#define ARM_1_TOP 2000
 #define ARM_2_BOTTOM -1160
 
 const char claw;
