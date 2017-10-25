@@ -31,7 +31,7 @@
  */
 
 void operatorControl() {
-	bool autoStacking = true;
+	bool autoStacking = false;
 	bool arm2ChangeGoal = false;
 
 	while (1) {

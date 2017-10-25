@@ -1,5 +1,5 @@
 #include "main.h"
-#define ARM_2_START 50
+#define ARM_2_START 230
 
 TaskHandle autoStackTaskHandle = NULL;
 TaskHandle armReturnTaskHandle = NULL;
@@ -8,12 +8,12 @@ int armPositions[13][2] = {
 //arm1 | arm2
 	{275,  -44},  //cone 1
 	{275,  -84},  //cone 2
-	{850,   20},  //cone 3
-	{1160,  20},  //cone 4
-	{925,   20},  //cone 5
-	{1100,  20},  //cone 6
-	{1130,  20},  //cone 7
-	{1410, -52},  //cone 8
+	{950,   30},  //cone 3
+	{1160,  30},  //cone 4
+	{975,   30},  //cone 5
+	{1150,  30},  //cone 6
+	{1150,  30},  //cone 7
+	{1460, -52},  //cone 8
 	{1475, -85},  //come 9
 	{1600, -86},  //cone 10
 	{1815, -70},  //cone 11
@@ -45,9 +45,6 @@ void _autoStackReturnTask(void *ignore) {
 	if(autoStackTaskHandle != NULL && taskGetState(autoStackTaskHandle) !=
 		 TASK_RUNNING) {
 		fbcSetGoal(&arm2FBC, ARM_2_BOTTOM);
-		while(!fbcIsConfident(&arm2FBC)) {
-			delay(20);
-		}
 		fbcSetGoal(&arm1FBC, ARM_1_BOTTOM);
 	}
 }
