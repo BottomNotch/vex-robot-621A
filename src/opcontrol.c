@@ -101,12 +101,22 @@ void operatorControl() {
 			clawMove();
 		}
 
-		mogoSet(joystickGetAnalog(1, 2));
+		if(buttonGetState(JOY1_8D)) {
+			fbcSetGoal(&mogoLFBC, MOGO_INTAKE_POSITION);
+		}
+
+		else if(buttonGetState(JOY1_8R)) {
+			fbcSetGoal(&mogoLFBC, MOGO_STACK_POSITION);
+		}
+
+		else {
+			fbcSetGoal(&mogoLFBC, (int)getSensor(mogoPotL) + (joystickGetAnalog(1,2)*2));
+		}
 
 		driveSet(joystickGetAnalog(1, 3) + joystickGetAnalog(1,4),
 						 joystickGetAnalog(1, 3) - joystickGetAnalog(1,4));
 
-		printf("%d\n\r", arm1FBC.goal);
+		printf("%d : %d\n\r", (int)getSensor(mogoPotL), (int)getSensor(mogoPotR));
 		delay(20);
 	}
 }

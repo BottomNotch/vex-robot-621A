@@ -45,6 +45,9 @@ void initialize() {
 	initFBCControllers();
 	fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot));
 	fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc));
+	fbcSetGoal(&mogoLFBC, (int)getSensor(mogoPotL));
 	fbcRunParallel(&arm1FBC);
 	fbcRunParallel(&arm2FBC);
+	fbcRunParallel(&mogoLFBC);
+	fbcRunParallel(&mogoRFBC);
 }

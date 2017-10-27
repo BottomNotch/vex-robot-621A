@@ -1,7 +1,8 @@
 #include "main.h"
 
 const char claw = 2;
-const char mogo = 3;
+const char mogoL = 3;
+const char mogoR = 1;
 const char RDrive2 = 4;
 const char RDrive1 = 5;
 const char LDrive1 = 6;
@@ -20,8 +21,12 @@ simpleSensor driveEncR = {6, OTHER, false};
 
 fbc_t arm1FBC;
 fbc_t arm2FBC;
+fbc_t mogoLFBC;
+fbc_t mogoRFBC;
 fbc_pid_t arm1PID;
 fbc_pid_t arm2PID;
+fbc_pid_t mogoLPID;
+fbc_pid_t mogoRPID;
 
 void encodersInit() {
 	initEncoder(&arm2Enc, 12, SPEED, TWO_WIRE, TICKS, 5);
@@ -31,7 +36,8 @@ void encodersInit() {
 
 void motorsInit() {
 	blrsMotorInit(claw, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(mogo, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(mogoL, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(mogoR, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(RDrive2, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(RDrive1, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(LDrive1, false, DEFAULT_SLEW_RATE, NULL);
@@ -61,7 +67,16 @@ void armSetBothStages(int stage1, int stage2) {
 }
 
 void mogoSet(int power) {
-	blrsMotorSet(mogo, power, false);
+	blrsMotorSet(mogoL, power, false);
+	blrsMotorSet(mogoR, power, false);
+}
+
+void mogoLSet(int power) {
+	blrsMotorSet(mogoL, power, true);
+}
+
+void mogoRSet(int power) {
+	blrsMotorSet(mogoR, power, true);
 }
 
 void clawMove() {
@@ -97,11 +112,27 @@ int _arm1Sense() {
 int _arm2Sense() {
 	return (int)getSensor(arm2Enc);
 }
+
+int _mogoLSense() {
+	fbcSetGoal(&mogoRFBC, mogoLFBC.goal + MOGO_OFFSET);
+	return (int)getSensor(mogoPotL);
+}
+
+int _mogoRSense() {
+	return (int)getSensor(mogoPotR);
+}
+
 void initFBCControllers() {
 	fbcInit(&arm1FBC, &armSetStage1, &_arm1Sense, NULL, NULL, -1, 1, 250, 15);
 	fbcInit(&arm2FBC, &armSetStage2, &_arm2Sense, NULL, NULL, -1, 1, 5, 10);
+	fbcInit(&mogoLFBC, &mogoLSet, &_mogoLSense, NULL, NULL, -1, 1, 50, 15);
+	fbcInit(&mogoRFBC, &mogoRSet, &_mogoRSense, NULL, NULL, -1, 1, 50, 15);
 	fbcPIDInitializeData(&arm1PID, 0.2, 0, 10, 0, 0);
 	fbcPIDInitializeData(&arm2PID, 0.7, 0, 0, 0, 0);
+	fbcPIDInitializeData(&mogoLPID, 0.7, 0, 170, 0, 0);
+	fbcPIDInitializeData(&mogoRPID, 0.7, 0, 170, 0, 0);
 	fbcPIDInit(&arm1FBC, &arm1PID);
 	fbcPIDInit(&arm2FBC, &arm2PID);
+	fbcPIDInit(&mogoLFBC, &mogoLPID);
+	fbcPIDInit(&mogoRFBC, &mogoRPID);
 }
