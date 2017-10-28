@@ -1,7 +1,8 @@
 #include "main.h"
 
 const char claw = 2;
-const char mogo = 3;
+const char mogoL = 3;
+const char mogoR = 1;
 const char RDrive2 = 4;
 const char RDrive1 = 5;
 const char LDrive1 = 6;
@@ -31,7 +32,8 @@ void encodersInit() {
 
 void motorsInit() {
 	blrsMotorInit(claw, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(mogo, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(mogoL, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(mogoR, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(RDrive2, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(RDrive1, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(LDrive1, false, DEFAULT_SLEW_RATE, NULL);
@@ -61,7 +63,8 @@ void armSetBothStages(int stage1, int stage2) {
 }
 
 void mogoSet(int power) {
-	blrsMotorSet(mogo, power, false);
+	blrsMotorSet(mogoL, power, false);
+	blrsMotorSet(mogoR, power, false);
 }
 
 void clawMove() {
