@@ -32,7 +32,6 @@
 
 void operatorControl() {
 	bool autoStacking = false;
-	bool arm2ChangeGoal = false;
 
 	while (1) {
 		if(autoStacking) {
@@ -79,22 +78,15 @@ void operatorControl() {
 
 			if(buttonGetState(JOY1_6U)) {
 				fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc) + 200);
-				arm2ChangeGoal = true;
 			}
 
 			else if(buttonGetState(JOY1_6D)) {
 				fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc) - 200);
-				arm2ChangeGoal = true;
 			}
 
-			else if(arm2ChangeGoal) {
-				fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc));
-				arm2ChangeGoal = false;
+			if(buttonIsNewPress(JOY1_7U)) {
+				autoStacking = true;
 			}
-
-				if(buttonIsNewPress(JOY1_7U)) {
-					autoStacking = true;
-				}
 		}
 
 		if(buttonIsNewPress(JOY1_8U)) {
