@@ -32,6 +32,7 @@
 
 void operatorControl() {
 	bool autoStacking = false;
+	bool controller2 = false;
 
 	while (1) {
 		if(autoStacking) {
@@ -93,10 +94,23 @@ void operatorControl() {
 			clawMove();
 		}
 
-		mogoSet(joystickGetAnalog(1, 2));
+		if(!controller2) {
+			mogoSet(joystickGetAnalog(1, 2));
+			driveSet(joystickGetAnalog(1, 3) + joystickGetAnalog(1,4),
+							 joystickGetAnalog(1, 3) - joystickGetAnalog(1,4));
+			if(buttonIsNewPress(JOY1_8D)) {
+				controller2 = true;
+			}
+		}
 
-		driveSet(joystickGetAnalog(1, 3) + joystickGetAnalog(1,4),
-						 joystickGetAnalog(1, 3) - joystickGetAnalog(1,4));
+		if(controller2) {
+			mogoSet(joystickGetAnalog(2, 2));
+			driveSet(joystickGetAnalog(2, 3) + joystickGetAnalog(2,4),
+							 joystickGetAnalog(2, 3) - joystickGetAnalog(2,4));
+			if(buttonIsNewPress(JOY1_8D)) {
+				controller2 = false;
+			}
+		}
 
 		printf("%d\n\r", arm1FBC.goal);
 		delay(20);
