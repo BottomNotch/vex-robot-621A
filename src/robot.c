@@ -31,7 +31,7 @@ void encodersInit() {
 }
 
 void motorsInit() {
-	blrsMotorInit(claw, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(claw,  false, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(mogoL, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(mogoR, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(RDrive2, true, DEFAULT_SLEW_RATE, NULL);
@@ -70,7 +70,7 @@ void mogoSet(int power) {
 void clawMove() {
 	static bool open = true;
 	if(!open) {
-		blrsMotorSet(claw, -80, true);
+		blrsMotorSet(claw, -65, true);
 		open = true;
 	}
 
@@ -108,3 +108,5 @@ void initFBCControllers() {
 	fbcPIDInit(&arm1FBC, &arm1PID);
 	fbcPIDInit(&arm2FBC, &arm2PID);
 }
+
+
