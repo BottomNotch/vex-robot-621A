@@ -40,7 +40,7 @@ void initializeIO() {
 void initialize() {
 	motorManagerInit();
 	motorsInit();
-	blrsMotorSet(claw, -80, true);
+	clawMove();
 	encodersInit();
 	initFBCControllers();
 	fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot));
