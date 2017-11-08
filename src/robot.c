@@ -81,12 +81,6 @@ void clawMove() {
 }
 
 int _arm1Sense() {
-	static bool armMoveDown = false;
-	static lastGoal = 0;
-	static long lastMillis;
-	int timePassed;
-	timePassed = millis() - lastMillis;
-
 	if(arm1FBC.goal > ARM_1_LOWER_P) {
 		arm1PID.kP = 0.13;
 	}
