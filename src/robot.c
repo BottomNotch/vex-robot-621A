@@ -10,6 +10,9 @@ const char LDrive2 = 7;
 const char arm1 = 8;
 const char arm2 = 9;
 
+bool arm1Stalled = false;
+bool arm2Stalled = false;
+
 simpleSensor powerExpander = {1, ANALOG, false};
 simpleSensor autoSelect = {2, ANALOG, false};
 simpleSensor arm1Pot = {3, ANALOG, false};
@@ -50,11 +53,23 @@ void driveSet(int left, int right) {
 }
 
 void armSetStage1(int power) {
+	if(!arm1Stalled) {
 		blrsMotorSet(arm1, power, true);
+	}
+
+	else {
+		blrsMotorSet(arm1, 0, true);
+	}
 }
 
 void armSetStage2(int power) {
-	blrsMotorSet(arm2, power, false);
+	if(!arm2Stalled) {
+		blrsMotorSet(arm2, power, false);
+	}
+
+	else {
+		blrsMotorSet(arm2, 0, false);
+	}
 }
 
 void armSetBothStages(int stage1, int stage2) {

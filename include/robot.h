@@ -20,6 +20,8 @@ const char LDrive2;
 const char arm1;
 const char arm2;
 
+bool arm1Stalled;
+bool arm2Stalled;
 
 simpleSensor powerExpander;
 simpleSensor autoSelect;

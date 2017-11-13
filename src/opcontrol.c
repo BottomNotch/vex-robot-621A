@@ -116,6 +116,22 @@ void operatorControl() {
 			}
 		}
 
+		if(buttonIsNewPress(JOY2_7U) && !arm1Stalled) {
+			arm1Stalled = true;
+		}
+
+		else if(buttonIsNewPress(JOY2_7D) && arm1Stalled) {
+			arm1Stalled = false;
+		}
+
+		if(buttonIsNewPress(JOY2_8U) && !arm2Stalled) {
+			arm2Stalled = true;
+		}
+
+		else if(buttonIsNewPress(JOY2_8D) && arm2Stalled) {
+			arm2Stalled = false;
+		}
+
 		delay(20);
 	}
 }
