@@ -47,4 +47,6 @@ void initialize() {
 	fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc));
 	fbcRunParallel(&arm1FBC);
 	fbcRunParallel(&arm2FBC);
+	fbcRunParallel(&driveLFBC);
+	fbcRunParallel(&driveRFBC);
 }

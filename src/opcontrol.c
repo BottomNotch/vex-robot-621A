@@ -32,7 +32,7 @@
 
 void operatorControl() {
 	bool autoStacking = false;
-	bool controller2 = false;
+	bool stopDrive = true;
 
 	while (1) {
 		if(autoStacking) {
@@ -98,22 +98,20 @@ void operatorControl() {
 			clawMove();
 		}
 
-		if(!controller2) {
-			mogoSet(joystickGetAnalog(1, 2));
-			driveSet(joystickGetAnalog(1, 3) + joystickGetAnalog(1,4),
-							 joystickGetAnalog(1, 3) - joystickGetAnalog(1,4));
-			if(buttonIsNewPress(JOY1_8D)) {
-				controller2 = true;
-			}
+		mogoSet(joystickGetAnalog(1, 2));
+		if(abs(joystickGetAnalog(1, 3)) > 15 || abs(joystickGetAnalog(1, 4)) > 15) {
+			fbcSetGoal(&driveLFBC, (int)getSensor(driveEncL) +
+								 joystickGetAnalog(1, 3) + joystickGetAnalog(1,4));
+
+			fbcSetGoal(&driveRFBC, (int)getSensor(driveEncR) +
+								 joystickGetAnalog(1, 3) - joystickGetAnalog(1,4));
+			stopDrive = true;
 		}
 
-		if(controller2) {
-			mogoSet(joystickGetAnalog(2, 2));
-			driveSet(joystickGetAnalog(2, 3) + joystickGetAnalog(2,4),
-							 joystickGetAnalog(2, 3) - joystickGetAnalog(2,4));
-			if(buttonIsNewPress(JOY1_8D)) {
-				controller2 = false;
-			}
+		else if(stopDrive) {
+			stopDrive = false;
+			fbcSetGoal(&driveLFBC, (int)getSensor(driveEncL));
+			fbcSetGoal(&driveRFBC, (int)getSensor(driveEncR));
 		}
 
 		if(buttonIsNewPress(JOY2_7U) && !arm1Stalled) {

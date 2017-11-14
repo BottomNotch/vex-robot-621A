@@ -24,8 +24,12 @@ simpleSensor driveEncR = {6, OTHER, false};
 
 fbc_t arm1FBC;
 fbc_t arm2FBC;
+fbc_t driveLFBC;
+fbc_t driveRFBC;
 fbc_pid_t arm1PID;
 fbc_pid_t arm2PID;
+fbc_pid_t driveLPID;
+fbc_pid_t driveRPID;
 
 void encodersInit() {
 	initEncoder(&arm2Enc, 12, SPEED, TWO_WIRE, TICKS, 5);
@@ -45,11 +49,14 @@ void motorsInit() {
 	blrsMotorInit(arm2, true, 2, NULL);
 }
 
-void driveSet(int left, int right) {
-	blrsMotorSet(LDrive1, left, false);
-	blrsMotorSet(LDrive2, left, false);
-	blrsMotorSet(RDrive1, right, false);
-	blrsMotorSet(RDrive2, right, false);
+void driveLSet(int power) {
+	blrsMotorSet(LDrive1, power, false);
+	blrsMotorSet(LDrive2, power, false);
+}
+
+void driveRSet(int power) {
+	blrsMotorSet(RDrive1, power, false);
+	blrsMotorSet(RDrive2, power, false);
 }
 
 void armSetStage1(int power) {
@@ -102,13 +109,28 @@ int _arm1Sense() {
 int _arm2Sense() {
 	return (int)getSensor(arm2Enc);
 }
+
+int _driveLSense() {
+	return (int)getSensor(driveEncL);
+}
+
+int _driveRSense() {
+	return (int)getSensor(driveEncR);
+}
+
 void initFBCControllers() {
-	fbcInit(&arm1FBC, &armSetStage1, &_arm1Sense, NULL, NULL, -1, 1, 250, 15);
-	fbcInit(&arm2FBC, &armSetStage2, &_arm2Sense, NULL, NULL, -1, 1, 5, 10);
+	fbcInit(&arm1FBC, &armSetStage1, &_arm1Sense, NULL, NULL, -20, 20, 250, 15);
+	fbcInit(&arm2FBC, &armSetStage2, &_arm2Sense, NULL, NULL, -30, 30, 5, 10);
+	fbcInit(&driveLFBC, &driveLSet, &_driveLSense, NULL, NULL, -15, 15, 50, 15);
+	fbcInit(&driveRFBC, &driveRSet, &_driveRSense, NULL, NULL, -15, 15, 50, 15);
 	fbcPIDInitializeData(&arm1PID, 0.2, 0, 10, 0, 0);
 	fbcPIDInitializeData(&arm2PID, 0.7, 0, 0, 0, 0);
+	fbcPIDInitializeData(&driveLPID, 0.7, 0, 0, 0, 0);
+	fbcPIDInitializeData(&driveRPID, 0.7, 0, 0, 0, 0);
 	fbcPIDInit(&arm1FBC, &arm1PID);
 	fbcPIDInit(&arm2FBC, &arm2PID);
+	fbcPIDInit(&driveLFBC, &driveLPID);
+	fbcPIDInit(&driveRFBC, &driveRPID);
 }
 
 

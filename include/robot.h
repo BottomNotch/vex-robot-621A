@@ -34,8 +34,12 @@ simpleSensor driveEncR;
 
 fbc_t arm1FBC;
 fbc_t arm2FBC;
+fbc_t driveLFBC;
+fbc_t driveRFBC;
 fbc_pid_t arm1PID;
 fbc_pid_t arm2PID;
+fbc_pid_t driveLPID;
+fbc_pid_t driveRPID;
 
 void encodersInit();
 void motorsInit();
