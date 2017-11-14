@@ -123,8 +123,8 @@ void initFBCControllers() {
 	fbcInit(&arm2FBC, &armSetStage2, &_arm2Sense, NULL, NULL, -30, 30, 5, 10);
 	fbcInit(&driveLFBC, &driveLSet, &_driveLSense, NULL, NULL, -15, 15, 50, 15);
 	fbcInit(&driveRFBC, &driveRSet, &_driveRSense, NULL, NULL, -15, 15, 50, 15);
-	fbcPIDInitializeData(&arm1PID, 0.2, 0, 10, 0, 0);
-	fbcPIDInitializeData(&arm2PID, 0.7, 0, 0, 0, 0);
+	fbcPIDInitializeData(&arm1PID, 0.15, 0, 80, 0, 0);
+	fbcPIDInitializeData(&arm2PID, 0.5, 0, 40, 0, 0);
 	fbcPIDInitializeData(&driveLPID, 0.7, 0, 0, 0, 0);
 	fbcPIDInitializeData(&driveRPID, 0.7, 0, 0, 0, 0);
 	fbcPIDInit(&arm1FBC, &arm1PID);
