@@ -96,13 +96,6 @@ void clawMove() {
 }
 
 int _arm1Sense() {
-	if(arm1FBC.goal > ARM_1_LOWER_P) {
-		arm1PID.kP = 0.13;
-	}
-
-	else {
-		arm1PID.kP = 0.2;
-	}
 	return (int)getSensor(arm1Pot);
 }
 
