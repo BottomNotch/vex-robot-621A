@@ -11,7 +11,6 @@ const char arm1 = 8;
 const char arm2 = 9;
 
 bool arm1Stalled = false;
-bool arm2Stalled = false;
 
 simpleSensor powerExpander = {1, ANALOG, false};
 simpleSensor autoSelect = {2, ANALOG, false};
@@ -30,6 +29,7 @@ fbc_pid_t arm1PID;
 fbc_pid_t arm2PID;
 fbc_pid_t driveLPID;
 fbc_pid_t driveRPID;
+
 
 void encodersInit() {
 	initEncoder(&arm2Enc, 12, SPEED, TWO_WIRE, TICKS, 5);
@@ -70,13 +70,11 @@ void armSetStage1(int power) {
 }
 
 void armSetStage2(int power) {
-	if(!arm2Stalled) {
-		blrsMotorSet(arm2, power, false);
+	if(fbcStallDetect(&arm2FBC)) {
+		fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc));
 	}
 
-	else {
-		blrsMotorSet(arm2, 0, false);
-	}
+	blrsMotorSet(arm2, power, false);
 }
 
 void armSetBothStages(int stage1, int stage2) {
@@ -120,11 +118,11 @@ int _driveRSense() {
 
 void initFBCControllers() {
 	fbcInit(&arm1FBC, &armSetStage1, &_arm1Sense, NULL, NULL, -20, 20, 250, 15);
-	fbcInit(&arm2FBC, &armSetStage2, &_arm2Sense, NULL, NULL, -30, 30, 5, 10);
+	fbcInit(&arm2FBC, &armSetStage2, &_arm2Sense, NULL, fbcStallDetect, -15, 15, 50, 15);
 	fbcInit(&driveLFBC, &driveLSet, &_driveLSense, NULL, NULL, -15, 15, 50, 15);
 	fbcInit(&driveRFBC, &driveRSet, &_driveRSense, NULL, NULL, -15, 15, 50, 15);
 	fbcPIDInitializeData(&arm1PID, 0.15, 0, 80, 0, 0);
-	fbcPIDInitializeData(&arm2PID, 0.5, 0, 40, 0, 0);
+	fbcPIDInitializeData(&arm2PID, 0.6, 0, 40, 0, 0);
 	fbcPIDInitializeData(&driveLPID, 0.7, 0, 0, 0, 0);
 	fbcPIDInitializeData(&driveRPID, 0.7, 0, 0, 0, 0);
 	fbcPIDInit(&arm1FBC, &arm1PID);

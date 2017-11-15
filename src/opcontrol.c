@@ -126,14 +126,6 @@ void operatorControl() {
 			arm1Stalled = false;
 		}
 
-		if(buttonIsNewPress(JOY2_8U) && !arm2Stalled) {
-			arm2Stalled = true;
-		}
-
-		else if(buttonIsNewPress(JOY2_8D) && arm2Stalled) {
-			arm2Stalled = false;
-		}
-
 		delay(20);
 	}
 }
