@@ -52,6 +52,7 @@ typedef struct fbc fbc_t; // predefine fbc_t for use inside fbc_t
    int pos_deadband, neg_deadband;
    unsigned int acceptableConfidence, acceptableTolerance;
    bool confident;
+   bool isStalled;
 
    /*
    * FOR INTERNAL USE
@@ -61,6 +62,7 @@ typedef struct fbc fbc_t; // predefine fbc_t for use inside fbc_t
    unsigned int _confidence;
    unsigned long _prevExecution; // most recent time of execution
    int _prevSense;
+   unsigned int stallDetectCount;
  } fbc_t;
 
 /**

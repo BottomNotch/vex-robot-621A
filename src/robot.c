@@ -50,27 +50,33 @@ void motorsInit() {
 }
 
 void driveLSet(int power) {
+	if(driveLFBC.isStalled) {
+		fbcSetGoal(&driveLFBC, (int)getSensor(driveEncL));
+	}
+
 	blrsMotorSet(LDrive1, power, false);
 	blrsMotorSet(LDrive2, power, false);
 }
 
 void driveRSet(int power) {
+	if(driveRFBC.isStalled) {
+		fbcSetGoal(&driveRFBC, (int)getSensor(driveEncR));
+	}
+
 	blrsMotorSet(RDrive1, power, false);
 	blrsMotorSet(RDrive2, power, false);
 }
 
 void armSetStage1(int power) {
-	if(!arm1Stalled) {
-		blrsMotorSet(arm1, power, true);
+	if(arm1FBC.isStalled) {
+		fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot));
 	}
 
-	else {
-		blrsMotorSet(arm1, 0, true);
-	}
+	blrsMotorSet(arm1, power, true);
 }
 
 void armSetStage2(int power) {
-	if(fbcStallDetect(&arm2FBC)) {
+	if(arm2FBC.isStalled) {
 		fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc));
 	}
 
@@ -117,10 +123,10 @@ int _driveRSense() {
 }
 
 void initFBCControllers() {
-	fbcInit(&arm1FBC, &armSetStage1, &_arm1Sense, NULL, NULL, -20, 20, 250, 15);
+	fbcInit(&arm1FBC, &armSetStage1, &_arm1Sense, NULL, fbcStallDetect, -20, 20, 250, 15);
 	fbcInit(&arm2FBC, &armSetStage2, &_arm2Sense, NULL, fbcStallDetect, -15, 15, 50, 15);
-	fbcInit(&driveLFBC, &driveLSet, &_driveLSense, NULL, NULL, -15, 15, 50, 15);
-	fbcInit(&driveRFBC, &driveRSet, &_driveRSense, NULL, NULL, -15, 15, 50, 15);
+	fbcInit(&driveLFBC, &driveLSet, &_driveLSense, NULL, fbcStallDetect, -15, 15, 50, 15);
+	fbcInit(&driveRFBC, &driveRSet, &_driveRSense, NULL, fbcStallDetect, -15, 15, 50, 15);
 	fbcPIDInitializeData(&arm1PID, 0.15, 0, 80, 0, 0);
 	fbcPIDInitializeData(&arm2PID, 0.6, 0, 40, 0, 0);
 	fbcPIDInitializeData(&driveLPID, 0.7, 0, 0, 0, 0);
