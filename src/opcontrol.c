@@ -118,14 +118,6 @@ void operatorControl() {
 			fbcSetGoal(&driveRFBC, (int)getSensor(driveEncR));
 		}
 
-		if(buttonIsNewPress(JOY2_7U) && !arm1Stalled) {
-			arm1Stalled = true;
-		}
-
-		else if(buttonIsNewPress(JOY2_7D) && arm1Stalled) {
-			arm1Stalled = false;
-		}
-
 		delay(20);
 	}
 }

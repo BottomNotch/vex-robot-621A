@@ -11,8 +11,6 @@ const char LDriveB = 10;
 const char arm1 = 8;
 const char arm2 = 9;
 
-bool arm1Stalled = false;
-
 simpleSensor powerExpander = {1, ANALOG, false};
 simpleSensor autoSelect = {2, ANALOG, false};
 simpleSensor arm1Pot = {3, ANALOG, false};

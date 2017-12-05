@@ -22,8 +22,6 @@ const char LDriveB ;
 const char arm1;
 const char arm2;
 
-bool arm1Stalled;
-
 simpleSensor powerExpander;
 simpleSensor autoSelect;
 simpleSensor arm1Pot;
