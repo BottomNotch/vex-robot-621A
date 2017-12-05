@@ -1,12 +1,13 @@
 #include "main.h"
 
-const char claw = 2;
-const char mogoL = 3;
-const char mogoR = 1;
-const char RDrive2 = 4;
-const char RDrive1 = 5;
-const char LDrive1 = 6;
-const char LDrive2 = 7;
+const char intake = 2;
+const char wrist = 3;
+const char RDriveB = 1;
+const char RDriveF = 4;
+const char RDriveM = 5;
+const char LDriveM = 6;
+const char LDriveF = 7;
+const char LDriveB = 10;
 const char arm1 = 8;
 const char arm2 = 9;
 
@@ -15,11 +16,10 @@ bool arm1Stalled = false;
 simpleSensor powerExpander = {1, ANALOG, false};
 simpleSensor autoSelect = {2, ANALOG, false};
 simpleSensor arm1Pot = {3, ANALOG, false};
-simpleSensor mogoPotL = {5, ANALOG, false};
-simpleSensor mogoPotR = {4, ANALOG, false};
 simpleSensor arm2Enc = {11, OTHER, false};
 simpleSensor driveEncL = {8, OTHER, false};
 simpleSensor driveEncR = {6, OTHER, false};
+simpleSensor mogoSwitch = {5, DIGITAL, false};
 
 fbc_t arm1FBC;
 fbc_t arm2FBC;
@@ -30,6 +30,10 @@ fbc_pid_t arm2PID;
 fbc_pid_t driveLPID;
 fbc_pid_t driveRPID;
 
+char _LDrivePower = 0;
+char _RDrivePower = 0;
+char _mogoPower = 0;
+
 
 void encodersInit() {
 	initEncoder(&arm2Enc, 12, SPEED, TWO_WIRE, TICKS, 5);
@@ -38,33 +42,44 @@ void encodersInit() {
 }
 
 void motorsInit() {
-	blrsMotorInit(claw,  false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(mogoL, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(mogoR, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(RDrive2, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(RDrive1, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(LDrive1, false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(LDrive2, false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(arm1, true, 0.35, NULL);
+	blrsMotorInit(intake,  false, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(wrist, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(RDriveB, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(RDriveM, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(RDriveF, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(LDriveF, false, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(LDriveM, false, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(LDriveB, false, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(arm1, false, 0.35, NULL);
 	blrsMotorInit(arm2, true, 2, NULL);
+}
+
+//the drive and mogo lift share motors, which makes controlling those mechanisms
+//more complex, this task makes it easier.
+void driveAndMogoTask(void *ignore) {
+	while(true) {
+		blrsMotorSet(RDriveF, _RDrivePower + _mogoPower, false);
+		blrsMotorSet(RDriveM, -_RDrivePower + _mogoPower, false);
+		blrsMotorSet(LDriveF, _LDrivePower + _mogoPower, false);
+		blrsMotorSet(LDriveM, -_LDrivePower + _mogoPower, false);
+		blrsMotorSet(RDriveB, _RDrivePower, false);
+		blrsMotorSet(LDriveB, _LDrivePower, false);
+		delay(20);
+	}
 }
 
 void driveLSet(int power) {
 	if(driveLFBC.isStalled) {
 		fbcSetGoal(&driveLFBC, (int)getSensor(driveEncL));
 	}
-
-	blrsMotorSet(LDrive1, power, false);
-	blrsMotorSet(LDrive2, power, false);
+	_LDrivePower = power;
 }
 
 void driveRSet(int power) {
 	if(driveRFBC.isStalled) {
 		fbcSetGoal(&driveRFBC, (int)getSensor(driveEncR));
 	}
-
-	blrsMotorSet(RDrive1, power, false);
-	blrsMotorSet(RDrive2, power, false);
+	_RDrivePower = power;
 }
 
 void armSetStage1(int power) {
@@ -89,19 +104,19 @@ void armSetBothStages(int stage1, int stage2) {
 }
 
 void mogoSet(int power) {
-	blrsMotorSet(mogoL, power, false);
-	blrsMotorSet(mogoR, power, false);
+	_mogoPower = power;
 }
 
 void clawMove() {
 	static bool open = false;
 	if(!open) {
-		blrsMotorSet(claw, -65, true);
+		blrsMotorSet(intake, -65, true);
 		open = true;
 	}
 
-	else {
-		blrsMotorSet(claw, 50, true);
+	else
+		{
+		blrsMotorSet(intake, 50, true);
 		open = false;
 	}
 }

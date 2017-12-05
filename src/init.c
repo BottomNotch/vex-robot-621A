@@ -49,4 +49,6 @@ void initialize() {
 	fbcRunParallel(&arm2FBC);
 	fbcRunParallel(&driveLFBC);
 	fbcRunParallel(&driveRFBC);
+	taskCreate(&driveAndMogoTask, TASK_DEFAULT_STACK_SIZE, NULL,
+						 TASK_PRIORITY_DEFAULT);
 }

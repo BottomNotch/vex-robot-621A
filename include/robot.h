@@ -11,12 +11,14 @@
 #define ARM_2_HIGH 0 //value TBD
 #define ARM_1_LOWER_P 1600
 
-const char claw;
-const char mogo;
-const char Rdrive2;
-const char RDrive1;
-const char LDrive1;
-const char LDrive2;
+const char intake;
+const char wrist;
+const char RDriveB;
+const char RDriveM;
+const char RDriveF;
+const char LDriveF;
+const char LDriveM;
+const char LDriveB ;
 const char arm1;
 const char arm2;
 
@@ -25,11 +27,10 @@ bool arm1Stalled;
 simpleSensor powerExpander;
 simpleSensor autoSelect;
 simpleSensor arm1Pot;
-simpleSensor mogoPotL;
-simpleSensor mogoPotR;
 simpleSensor arm2Enc;
 simpleSensor driveEncL;
 simpleSensor driveEncR;
+simpleSensor mogoSwitch;
 
 fbc_t arm1FBC;
 fbc_t arm2FBC;
@@ -42,6 +43,7 @@ fbc_pid_t driveRPID;
 
 void encodersInit();
 void motorsInit();
+void driveAndMogoTask();
 void driveSet(int left, int right);
 void armSetStage1(int power);
 void armSetStage2(int power);
