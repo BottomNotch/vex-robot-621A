@@ -33,7 +33,7 @@
 void operatorControl() {
 	bool autoStacking = false;
 	bool stopDrive = true;
-
+	
 	while (1) {
 		if(autoStacking) {
 
@@ -99,7 +99,7 @@ void operatorControl() {
 		}
 
 		if(buttonIsNewPress(JOY1_8U)) {
-			clawMove();
+			intakeMove();
 		}
 
 		mogoSet(joystickGetAnalog(1, 2));

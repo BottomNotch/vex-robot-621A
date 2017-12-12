@@ -1,7 +1,6 @@
 #include "main.h"
 
 const char intake = 2;
-const char wrist = 3;
 const char RDriveB = 1;
 const char RDriveF = 4;
 const char RDriveM = 5;
@@ -32,7 +31,6 @@ char _LDrivePower = 0;
 char _RDrivePower = 0;
 char _mogoPower = 0;
 
-
 void encodersInit() {
 	initEncoder(&arm2Enc, 12, SPEED, TWO_WIRE, TICKS, 5);
 	initEncoder(&driveEncL, 9, SPEED, TWO_WIRE, TICKS, 1);
@@ -41,7 +39,6 @@ void encodersInit() {
 
 void motorsInit() {
 	blrsMotorInit(intake,  false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(wrist, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(RDriveB, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(RDriveM, true, DEFAULT_SLEW_RATE, NULL);
 	blrsMotorInit(RDriveF, true, DEFAULT_SLEW_RATE, NULL);
@@ -101,22 +98,22 @@ void armSetBothStages(int stage1, int stage2) {
 	armSetStage2(stage2);
 }
 
-void mogoSet(int power) {
-	_mogoPower = power;
+void intakeMove() {
+	static bool hasCone = false;
+
+	if(hasCone) {
+		blrsMotorSet(intake, 0, true);
+		hasCone = false;
+	}
+
+	else {
+		blrsMotorSet(intake, -127, true);
+		hasCone = true;
+	}
 }
 
-void clawMove() {
-	static bool open = false;
-	if(!open) {
-		blrsMotorSet(intake, -65, true);
-		open = true;
-	}
-
-	else
-		{
-		blrsMotorSet(intake, 50, true);
-		open = false;
-	}
+void mogoSet(int power) {
+	_mogoPower = power;
 }
 
 int _arm1Sense() {
