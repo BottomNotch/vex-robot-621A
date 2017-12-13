@@ -27,9 +27,9 @@ fbc_pid_t arm2PID;
 fbc_pid_t driveLPID;
 fbc_pid_t driveRPID;
 
-char _LDrivePower = 0;
-char _RDrivePower = 0;
-char _mogoPower = 0;
+int _LDrivePower = 0;
+int _RDrivePower = 0;
+int _mogoPower = 0;
 
 void encodersInit() {
 	initEncoder(&arm2Enc, 12, SPEED, TWO_WIRE, TICKS, 5);
