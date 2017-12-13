@@ -4,8 +4,8 @@
 
 #define CLAW_OPEN true
 #define CLAW_CLOSE false
-#define ARM_1_BOTTOM 350
-#define ARM_1_TOP 2500
+#define ARM_1_BOTTOM 190
+#define ARM_1_TOP 1600
 #define ARM_2_BOTTOM -1160
 #define ARM_1_LOWER_P 1600
 
