@@ -107,7 +107,7 @@ void intakeMove() {
 	}
 
 	else {
-		blrsMotorSet(intake, -127, true);
+		blrsMotorSet(intake, -60, true);
 		hasCone = true;
 	}
 }
