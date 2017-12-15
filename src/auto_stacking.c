@@ -6,16 +6,16 @@ TaskHandle armReturnTaskHandle = NULL;
 char autoStackCone = 1;
 int armPositions[13][2] = {
 //arm1 | arm2
-	{275,  -44},  //cone 1
-	{275,  -84},  //cone 2
-	{950,   30},  //cone 3
-	{1160,  30},  //cone 4
-	{975,   30},  //cone 5
-	{1150,  30},  //cone 6
-	{1150,  30},  //cone 7
-	{1460, -52},  //cone 8
-	{1475, -85},  //come 9
-	{1600, -86},  //cone 10
+	{ARM_1_TOP,     209},  //cone 1
+	{ARM_1_TOP,     209},  //cone 2
+	{ARM_1_BOTTOM, -200},  //cone 3
+	{626,          -217},  //cone 4
+	{820,          -162},  //cone 5
+	{975,          -129},  //cone 6
+	{1025,         -184},  //cone 7
+	{1225,         -93 },  //cone 8
+	{1403,         -183},  //come 9
+	{1391,         -205},  //cone 10
 	{1815, -70},  //cone 11
 	{2363, -430}, //cone 12 (step one)
 	{2055, -430}, //cone 12 (step two)

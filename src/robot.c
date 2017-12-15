@@ -133,7 +133,7 @@ int _driveRSense() {
 }
 
 void initFBCControllers() {
-	fbcInit(&arm1FBC, &armSetStage1, &_arm1Sense, NULL, fbcStallDetect, -20, 20, 250, 15);
+	fbcInit(&arm1FBC, &armSetStage1, &_arm1Sense, NULL, fbcStallDetect, -20, 20, 250, 65);
 	fbcInit(&arm2FBC, &armSetStage2, &_arm2Sense, NULL, fbcStallDetect, -15, 15, 50, 15);
 	fbcInit(&driveLFBC, &driveLSet, &_driveLSense, NULL, fbcStallDetect, -15, 15, 50, 15);
 	fbcInit(&driveRFBC, &driveRSet, &_driveRSense, NULL, fbcStallDetect, -15, 15, 50, 15);
