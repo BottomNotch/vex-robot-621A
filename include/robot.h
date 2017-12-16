@@ -8,6 +8,9 @@
 #define ARM_1_TOP 1600
 #define ARM_2_BOTTOM -1160
 #define ARM_1_LOWER_P 1600
+#define INTAKE 0
+#define OUTTAKE 1
+#define TOGGLE 2
 
 const char intake;
 const char RDriveB;
@@ -38,7 +41,7 @@ fbc_pid_t driveRPID;
 
 void encodersInit();
 void motorsInit();
-void intakeMove();
+void intakeMove(int mode);
 void driveAndMogoTask();
 void driveSet(int left, int right);
 void armSetStage1(int power);

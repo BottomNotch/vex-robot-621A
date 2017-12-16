@@ -98,15 +98,15 @@ void armSetBothStages(int stage1, int stage2) {
 	armSetStage2(stage2);
 }
 
-void intakeMove() {
+void intakeMove(int mode) {
 	static bool hasCone = false;
 
-	if(hasCone) {
+	if((hasCone && mode == TOGGLE) || mode == OUTTAKE) {
 		blrsMotorSet(intake, 0, true);
 		hasCone = false;
 	}
 
-	else {
+	else if((!hasCone && mode == TOGGLE) || mode == INTAKE) {
 		blrsMotorSet(intake, -60, true);
 		hasCone = true;
 	}

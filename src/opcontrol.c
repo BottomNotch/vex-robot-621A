@@ -99,7 +99,7 @@ void operatorControl() {
 		}
 
 		if(buttonIsNewPress(JOY1_8U)) {
-			intakeMove();
+			intakeMove(TOGGLE);
 		}
 
 		mogoSet(joystickGetAnalog(1, 2));
