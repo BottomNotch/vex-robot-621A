@@ -9,16 +9,16 @@ int armPositions[13][2] = {
 	{ARM_1_TOP,     209},  //cone 1
 	{ARM_1_TOP,     209},  //cone 2
 	{ARM_1_BOTTOM, -200},  //cone 3
-	{626,          -217},  //cone 4
-	{820,          -162},  //cone 5
-	{975,          -129},  //cone 6
-	{1025,         -184},  //cone 7
-	{1225,         -93 },  //cone 8
-	{1403,         -183},  //come 9
-	{1391,         -205},  //cone 10
-	{1815, -70},  //cone 11
-	{2363, -430}, //cone 12 (step one)
-	{2055, -430}, //cone 12 (step two)
+	{676,          -217},  //cone 4
+	{870,          -162},  //cone 5
+	{1025,          -129},  //cone 6
+	{1075,         -184},  //cone 7
+	{1275,         -93 },  //cone 8
+	{1453,         -183},  //come 9
+	{1401,         -205},  //cone 10
+	{1865, -70},  //cone 11
+	{2413, -430}, //cone 12 (step one)
+	{2105, -430}, //cone 12 (step two)
 };
 
 void _autoStackTask(void *ignore) {
