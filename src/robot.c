@@ -34,7 +34,7 @@ int _mogoPower = 0;
 void encodersInit() {
 	initEncoder(&arm2Enc, 12, SPEED, TWO_WIRE, TICKS, 5);
 	initEncoder(&driveEncL, 9, SPEED, TWO_WIRE, TICKS, 1);
-	initEncoder(&driveEncR, 42, SPEED, TWO_WIRE, TICKS, 1);
+	initEncoder(&driveEncR, 7, SPEED, TWO_WIRE, TICKS, 1);
 }
 
 void motorsInit() {
