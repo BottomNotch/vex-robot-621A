@@ -52,14 +52,6 @@ void operatorControl() {
 				}
 			}
 
-			if(buttonIsNewPress(JOY1_7L) && autoStackCone < 12) {
-				autoStackCone++;
-			}
-
-			else if(buttonIsNewPress(JOY1_7D) && autoStackCone > 1) {
-				autoStackCone--;
-			}
-
 			if(buttonIsNewPress(JOY1_7U)) {
 				autoStacking = false;
 			}
@@ -116,6 +108,18 @@ void operatorControl() {
 			stopDrive = false;
 			fbcSetGoal(&driveLFBC, (int)getSensor(driveEncL));
 			fbcSetGoal(&driveRFBC, (int)getSensor(driveEncR));
+		}
+
+		if(buttonIsNewPress(JOY2_6U) && autoStackCone < 12) {
+			autoStackCone++;
+		}
+
+		else if(buttonIsNewPress(JOY2_6D) && autoStackCone > 1) {
+			autoStackCone--;
+		}
+
+		else if(buttonIsNewPress(JOY2_5U)) {
+			autoStackCone = 1;
 		}
 
 		delay(20);

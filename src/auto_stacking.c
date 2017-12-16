@@ -38,7 +38,6 @@ void _autoStackTask(void *ignore) {
 		}
 		fbcSetGoal(&arm2FBC, armPositions[12][1]);
 	}
-	autoStackCone++;
 }
 
 void _autoStackReturnTask(void *ignore) {
