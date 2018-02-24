@@ -31,7 +31,6 @@
  */
 
 void operatorControl() {
-	bool stopDrive = true;
 	
 	while (1) {
 
@@ -42,11 +41,9 @@ void operatorControl() {
 
 			fbcSetGoal(&driveRFBC, driveRSense() +
 								 joystickGetAnalog(1, 3) - joystickGetAnalog(1,4));
-			stopDrive = true;
 		}
 
-		else if(stopDrive) {
-			stopDrive = false;
+		else {
 			fbcSetGoal(&driveLFBC, driveLSense());
       fbcSetGoal(&driveRFBC, driveRSense());
 		}
