@@ -31,6 +31,7 @@
 #include "fbc_pid.h"
 #include "buttons.h"
 #include "drive_mogo.h"
+#include "debug.h"
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus

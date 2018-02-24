@@ -40,4 +40,5 @@ void initializeIO() {
 void initialize() {
 	motorManagerInit();
 	driveAndMogoInit();
+  startDebug();
 }
