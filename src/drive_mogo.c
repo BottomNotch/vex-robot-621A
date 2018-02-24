@@ -25,12 +25,12 @@ void _encodersInit() {
 }
 
 void _motorsInit() {
-	blrsMotorInit(diffLF, false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(diffLB, false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(driveL, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(driveR, false, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(diffRB, true, DEFAULT_SLEW_RATE, NULL);
-	blrsMotorInit(diffRF, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(diffLF, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(diffLB, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(driveL, false, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(driveR, true, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(diffRB, false, DEFAULT_SLEW_RATE, NULL);
+	blrsMotorInit(diffRF, false, DEFAULT_SLEW_RATE, NULL);
 }
 
 
