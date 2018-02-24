@@ -30,10 +30,7 @@
 #include "fbc.h"
 #include "fbc_pid.h"
 #include "buttons.h"
-#include "simple_sensors.h"
-#include "simple_sensors_encoder.h"
-#include "auto_stacking.h"
-#include "robot.h"
+#include "drive_mogo.h"
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus

@@ -31,95 +31,24 @@
  */
 
 void operatorControl() {
-	bool autoStacking = false;
 	bool stopDrive = true;
 	
 	while (1) {
-		if(autoStacking) {
-
-			if(buttonIsNewPress(JOY1_6U)) {
-					autoStack();
-			}
-
-			else if(buttonIsNewPress(JOY1_6D)) {
-				if(autoStackTaskHandle != NULL &&
-					 taskGetState(autoStackTaskHandle) == TASK_RUNNING) {
-					cancelStack();
-				}
-
-				else {
-					returnArm();
-				}
-			}
-
-			if(buttonIsNewPress(JOY1_7U)) {
-				autoStacking = false;
-			}
-		}
-
-		else {
-			if(buttonGetState(JOY1_5U)) {
-				fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot) + 750);
-			}
-
-			else if(buttonGetState(JOY1_5D)) {
-				fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot) - 750);
-			}
-			if(arm1FBC.goal > ARM_1_TOP) {
-				fbcSetGoal(&arm1FBC, ARM_1_TOP);
-			}
-
-			else if(arm1FBC.goal < ARM_1_BOTTOM) {
-				fbcSetGoal(&arm1FBC, ARM_1_BOTTOM);
-			}
-
-			if(buttonGetState(JOY1_6U)) {
-				fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc) + 200);
-			}
-
-			else if(buttonGetState(JOY1_6D)) {
-				fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc) - 200);
-			}
-
-			if(arm2FBC.goal < ARM_2_BOTTOM) {
-				fbcSetGoal(&arm2FBC, ARM_2_BOTTOM);
-			}
-
-			if(buttonIsNewPress(JOY1_7U)) {
-				autoStacking = true;
-			}
-		}
-
-		if(buttonIsNewPress(JOY1_8U)) {
-			intakeMove(TOGGLE);
-		}
 
 		mogoSet(joystickGetAnalog(1, 2));
 		if(abs(joystickGetAnalog(1, 3)) > 15 || abs(joystickGetAnalog(1, 4)) > 15) {
-			fbcSetGoal(&driveLFBC, (int)getSensor(driveEncL) +
+			fbcSetGoal(&driveLFBC, driveLSense() +
 								 joystickGetAnalog(1, 3) + joystickGetAnalog(1,4));
 
-			fbcSetGoal(&driveRFBC, (int)getSensor(driveEncR) +
+			fbcSetGoal(&driveRFBC, driveRSense() +
 								 joystickGetAnalog(1, 3) - joystickGetAnalog(1,4));
 			stopDrive = true;
 		}
 
 		else if(stopDrive) {
 			stopDrive = false;
-			fbcSetGoal(&driveLFBC, (int)getSensor(driveEncL));
-			fbcSetGoal(&driveRFBC, (int)getSensor(driveEncR));
-		}
-
-		if(buttonIsNewPress(JOY2_6U) && autoStackCone < 12) {
-			autoStackCone++;
-		}
-
-		else if(buttonIsNewPress(JOY2_6D) && autoStackCone > 1) {
-			autoStackCone--;
-		}
-
-		else if(buttonIsNewPress(JOY2_5U)) {
-			autoStackCone = 1;
+			fbcSetGoal(&driveLFBC, driveLSense());
+      fbcSetGoal(&driveRFBC, driveRSense());
 		}
 
 		delay(20);

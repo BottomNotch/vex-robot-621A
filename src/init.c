@@ -39,16 +39,5 @@ void initializeIO() {
  */
 void initialize() {
 	motorManagerInit();
-	motorsInit();
-	intakeMove(INTAKE);
-	encodersInit();
-	initFBCControllers();
-	fbcSetGoal(&arm1FBC, (int)getSensor(arm1Pot));
-	fbcSetGoal(&arm2FBC, (int)getSensor(arm2Enc));
-	fbcRunParallel(&arm1FBC);
-	fbcRunParallel(&arm2FBC);
-	fbcRunParallel(&driveLFBC);
-	fbcRunParallel(&driveRFBC);
-	taskCreate(&driveAndMogoTask, TASK_DEFAULT_STACK_SIZE, NULL,
-						 TASK_PRIORITY_DEFAULT);
+	driveAndMogoInit();
 }
